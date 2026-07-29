@@ -1,4 +1,6 @@
-# Hernán Boschetti — Anti-persona: el cocinero por inspiración
+# Hernán Boschetti — ARCHIVADA (ex anti-persona): el cocinero por inspiración
+
+> **Archivada el 2026-07-29, por decisión del equipo.** Ficha 100% sintética: su arquetipo (el que no sufre porque improvisar es su placer) no apareció en ninguna de las 7 entrevistas reales (E01–E07). El espacio que representaba sigue existiendo en los datos (el ~11% de la encuesta que "nunca" sufre el ¿qué cocino?), pero el rol de anti-persona quedó mejor cubierto por [Carmen Yépez](carmen-yepez.md), derivada de evidencia real (E07). Lo que queda vacante es su filtro específico: detectar features de exploración/inspiración foodie que atraerían a un no-usuario — tenerlo presente al priorizar. Se reactiva si alguna entrevista real trae a un improvisador por placer.
 
 > "¿Planificar la semana de comidas? Es como planificar de qué me voy a reír el jueves. Cocinar es lo único del día que no tiene agenda."
 

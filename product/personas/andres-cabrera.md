@@ -1,49 +1,53 @@
-# Andrés Cabrera — Persona secundaria: la pareja sin hijos que co-decide
+# Andrés Cabrera — Persona secundaria: la pareja sin hijos, cómoda en el caos
 
-> "A las cinco de la tarde arranca el mismo chat de siempre: '¿esta noche qué?' — '¿qué hay?' — 'no sé, mira tú'. Los dos trabajamos todo el día; nadie quiere además ser el gerente de la cena."
+> "No falló. Simplemente el martes a las nueve de la noche no me acuerdo de que existe una herramienta: abro la alacena. La alacena está más cerca que la app."
 
-- **Role:** Analista de datos en una aseguradora, trabajo híbrido; decide las comidas a medias con su esposa Camila (diseñadora, full remoto)
+- **Role:** analista de datos, trabajo híbrido; comparte cocina y compras con Camila ("60-40, según quién llega antes" — no hay sistema)
 - **Age range:** 32–36
-- **Location:** Bogotá, Colombia
-- **Industry:** Seguros / datos
+- **Location:** Bogotá, Colombia (arquetipo localizado; la evidencia viene de Buenos Aires)
+- **Industry:** seguros / datos
 - **Technical literacy:** media-alta
-- **Experience level:** intermedio (cocinan los dos desde que viven juntos, hace 6 años; nunca sostuvieron un plan más de una semana)
+- **Experience level:** intermedio; cocinar es un trámite para él y un gusto ocasional para ella
+- **source:** derived
+- **Fuentes:** E02 (Sebastián, 36, Buenos Aires) + encuesta jul 2026 (segmento pareja sin hijos, n=41). **Confianza: media-baja — una sola entrevista real del segmento**; donde la entrevista y la encuesta difieren, pesa la encuesta.
 
 ## Goals
 
-- Que la pregunta "¿esta noche qué?" deje de ocupar el chat de las 17h — la cena es la única comida que cocinan en serio, y aun así los agarra sin respuesta casi todos los días.
-- Comer variado de verdad: les gusta cocinar cuando hay plan y energía, pero por comodidad rotan los mismos 6 platos hace meses.
-- Que la compra grande quincenal rinda hasta el final: en la semana 2 se dañan las verduras del fruver y se compra de nuevo "a lo que salga".
-- Resolver dos dietas sin cocinar doble: Camila es vegetariana, él no — cada cena es un pequeño problema de ingeniería.
+- Cenar más temprano: hoy comen 21:30 porque al llegar no hay nada resuelto.
+  > "Cuando llegamos no hay nada resuelto y cocinar toma cuarenta minutos." — E02
+- Variedad — pero el dolor es **de ella, no de él**: la asimetría es el rasgo central del hogar.
+  > "Yo soy el que usaría la herramienta y ella es la que tiene el problema." — E02
+- Mantener domada la plata del delivery — el único cambio que les funcionó, y funcionó porque no exigía decidir nada.
+  > "El de delivery no me pedía decidir nada. Solo me pedía tener cosas. El de la variedad te pide pensar todos los días: es mucho más caro de mantener." — E02
+- Que cualquier sistema le sirva a los dos o no sirva.
+  > "La mitad de las decisiones no son mías. Tendría que servirle a los dos o no sirve." — E02
 
 ## Frustrations
 
-- La decisión compartida tiene un bug: cada uno asume que el otro pensó la cena. A las 20h nadie pensó nada, y el que cede termina decidiendo cansado — o piden domicilio y queda la sensación de derrota.
-- Le pidió menús semanales a ChatGPT dos o tres veces: recetas genéricas con ingredientes que no se consiguen en su barrio, y había que re-explicar las dietas y los gustos en cada conversación. Lo dejó. "Sirve para salir del paso una vez, no como sistema."
-- La lista la arman bien — revisan nevera y despensa antes de la compra grande — pero viven entre dos canales (supermercado quincenal + fruver del barrio) y qué se compra dónde vive en la cabeza de cada uno; los cruces generan compras dobles y faltantes.
-- La repetición no les duele por salud sino por aburrimiento: cocinar era algo que disfrutaban juntos y se volvió trámite.
-- Los planes de "esta semana comemos mejor" duran hasta el primer día que uno de los dos llega tarde: sin plan visible para ambos, el default es lo de siempre o el domicilio.
+- Nadie piensa la cena hasta las 21: "¿fideos?" gritado desde la alacena es todo el proceso de decisión (E02).
+- Entre semana rotan 4 platos; los intentos de variedad terminan en sushi y un curry de fin de semana que no se repite (E02).
+- La planilla compartida que él armó murió por carga asimétrica — y casi cuesta una pelea.
+  > "La planilla decía que ella no gastaba nada, lo cual era falso. En el momento en que un número está mal, dejás de mirarlo." — E02
+- ChatGPT le funcionó bien y aun así no volvió: sin gancho en el momento de la decisión, la herramienta no existe (E02).
+- Lo único que tiran es la "compra de personaje": el kale y la quinoa del domingo de "vamos a comer sano".
+  > "Me da un poco de fastidio la evidencia de que uno se compra un personaje que no es." — E02
 
 ## Typical tasks
 
-- Compra grande quincenal en el supermercado (van juntos, con lista compartida) + reposición de frescos en el fruver 1–2 veces por semana.
-- La cena es la comida que se cocina a diario; los almuerzos se resuelven cada uno por su lado (oficina, sobras, algo rápido).
-- Lista y coordinación en WhatsApp entre los dos: mensajes sueltos tipo "falta café" que después nadie encuentra.
-- Negociar cada cena contra dos dietas y dos niveles de hambre/energía distintos.
-- Cada tanto, un intento de plan semanal en una nota compartida que muere el miércoles.
+- Pedido mensual online con "repetir compra" — **la única lista viva de la casa la mantiene el súper, no ellos** (E02).
+- Compra diaria por impulso en el chino/tienda de la esquina; un mensaje de "¿comemos milanesas?" desde el local es toda la coordinación (E02).
+- Heladera casi vacía a propósito: compran para hoy, casi no tiran (E02).
+- Plan B permanente (latas, huevos, fideos, salsa) para no pedir delivery — el cambio que sobrevivió (E02).
 
 ## Device preferences
 
-- **Primario:** Android gama alta; WhatsApp como sistema operativo de la pareja (listas, recordatorios, decisiones).
-- **Secundario:** portátil del trabajo; Camila con su propio setup remoto.
-- Adoptan apps con facilidad pero las abandonan sin culpa: si una herramienta no es visible para los dos a la vez, no sirve — la mitad del problema es de coordinación, no de información.
+- **Primario:** Android gama alta; WhatsApp como canal de la pareja.
+- Adoptan y abandonan apps sin culpa; cero tolerancia a mantener algo a mano entre dos.
 
 ---
 
-**Por qué está en el set:** representa al segundo segmento de la encuesta (pareja sin hijos: 29% de la muestra, n=41) y dos dimensiones que ninguna otra persona cubría — la **decisión compartida** (44% de los hogares de la muestra decide de a dos) y el **abandono de IA genérica** (su segmento es el que más probó y dejó ChatGPT: 41% — es el reclutamiento ideal para la pregunta C2 de la guía). Valida las creencias 1, 3 y 4 en el hogar de dos. Su vara: la sugerencia tiene que ser visible para ambos y satisfacer dos dietas sin duplicar trabajo.
+## Reconciliación con la versión sintética (creada 2026-07-28, derivada 2026-07-29)
 
-## Evidencia (encuesta jul 2026, n=141; segmento pareja sin hijos n=41)
-
-**Validado:** decide en el día (61%; solo 20% planifica — aunque es el segmento que *más* planifica de todos), dolor "¿qué cocino?" frecuente (54% dolor alto), repetición (73%), armar lista revisando qué hay (90% — el máximo de la muestra), compra grande + reposición (44% — el patrón dominante del segmento), probó IA y la dejó (41%), decisión compartida (44% de la muestra general).
-
-**Supuesto sintético (agenda de entrevistas):** el mecanismo exacto del "bug de coordinación" (cada uno asume que el otro pensó), que la visibilidad compartida del plan cambie el resultado, el porqué del abandono de ChatGPT (fricción vs calidad — pregunta C2), y el manejo real de las dos dietas.
+- **Confirmado:** decisión en el día, rotación corta, muerte de los sistemas de carga compartida, abandono de ChatGPT, WhatsApp como sistema operativo de la pareja, "visible para los dos o no sirve".
+- **Corregido:** el "bug de coordinación" simétrico (cada uno asume que el otro pensó) y el deseo de **dos dueños simétricos** no aparecieron en la evidencia — lo que aparece es **dolor asimétrico** (uno lo sufre, el otro lo operaría), comodidad en el caos, y que el único modelo multipersona vivo del corpus es *un dueño que carga + el resto consulta* (E05, E06). El dolor del segmento es real pero tibio (54% dolor alto — el menor de los hogares múltiples).
+- **Sin evidencia aún (rasgos sintéticos conservados solo como probes):** las dos dietas (Camila vegetariana) y el mecanismo exacto de coordinación fallida. Reclutar una pareja de dos dietas sigue pendiente.
