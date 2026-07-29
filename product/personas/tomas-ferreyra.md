@@ -1,4 +1,4 @@
-# Tomás Ferreyra — Persona secundaria: el joven profesional que vive solo
+# Tomás Ferreyra — Persona terciaria: el joven profesional que vive solo
 
 > "Todos los domingos compro como si fuera otra persona: una que cocina. El viernes tiro media verdulería y pido sushi."
 
@@ -26,7 +26,7 @@
 
 ## Typical tasks
 
-- Compra semanal en el chino o supermercado de cercanía, sin lista, guiado por el optimismo.
+- Compra semanal en el chino o supermercado de cercanía, con una lista que arma mirando la heladera — como casi todos. El problema no es la lista: es que la lista compra ingredientes para una semana ideal que después no cocina.
 - Cocina "en serio" 2–3 veces por semana; el resto: huevos, tostadas, delivery.
 - Intento de batch cooking un domingo al mes, que le rinde hasta el miércoles.
 - Trackea gastos en una app; ver la categoría "delivery" cada fin de mes es su momento de arrepentimiento y de re-motivación.
@@ -37,3 +37,11 @@
 - **Primario:** iPhone reciente; vive en el celular.
 - **Secundario:** MacBook personal + monitor; abierta todo el día.
 - Ecosistema completo: paga con el teléfono, domótica básica, atajos de Siri. Tolerancia cero a UX mala; expectativa alta de que la app "entienda sola" sin carga manual.
+
+---
+
+## Evidencia (encuesta jul 2026, n=141; segmento unipersonal n=31)
+
+**Validado:** improvisación (77% del segmento decide en el día; 16% planifica), "probó ChatGPT y lo dejó" (35% del segmento — el patrón exacto), su dolor es real pero menor que el del hogar con hijos (48% vs 67% dolor alto — consistente con su lugar no-primario en el set). Corregido por la encuesta: comprar sin lista era minoritario — el 84% de los unipersonales revisa qué hay y arma lista; su quiebre está en la ejecución de las 21h, no en la ausencia de lista.
+
+**Supuesto sintético / borde deliberado:** el gasto en delivery como motor de cambio y el ciclo lunes-jueves de objetivos (creencia 2 en unipersonal). Su historial de herramientas (MyFitnessPal, Notion, Excel) lo hace outlier a propósito: el 94% de su segmento nunca descargó una app de la categoría — Tomás es el borde early-adopter, no el centro.

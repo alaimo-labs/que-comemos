@@ -21,7 +21,7 @@
 - Improvisa la cena frente a la heladera abierta, cansada, y termina cayendo siempre en lo mismo: milanesas con puré, fideos con tuco, tarta de jamón y queso. Calcula que rota 7 u 8 platos hace años.
 - Cuando intenta "comer mejor", el intento dura una semana: sin plan, la primera noche complicada la devuelve a lo conocido.
 - Compra sin lista o con una lista a medias; después descubre que compró de más de una cosa y le falta lo esencial para cualquier plato nuevo.
-- Probó apps de recetas y las abandonó: le proponían platos con ingredientes que no tenía, y cargar datos le llevaba más tiempo del que le ahorraba. "Si la app me suma trabajo, no la abro más."
+- Nunca descargó una app de planificación de comidas — como el 80% de su segmento, no ve qué le resolvería. Lo que sí probó fue pedirle ideas a ChatGPT dos o tres veces: le sugirió platos con ingredientes que no tenía y hubo que explicarle todo de nuevo cada vez; dejó de usarlo. "Si me suma trabajo, no lo abro más."
 - Nadie más en la casa comparte la carga: el marido "ayuda si le decís exactamente qué hacer", lo cual también es trabajo de ella.
 
 ## Typical tasks
@@ -37,3 +37,11 @@
 - **Primario:** celular Android de gama media; todo lo hace ahí (WhatsApp, home banking, Mercado Libre).
 - **Secundario:** notebook del trabajo, solo para trabajar.
 - Usa pocas apps y les tiene poca paciencia: si algo requiere tutorial, lo abandona. La lista de compras hoy vive en notas del celular o en un papel imantado en la heladera.
+
+---
+
+## Evidencia (encuesta jul 2026, n=141; segmento hogar con hijos escolares n=45)
+
+**Validado:** improvisación diaria (78% del segmento decide en el día; 7% planifica), dolor "¿qué cocino?" (67% varias veces/semana o a diario — el máximo de todos los segmentos), rotación de pocos platos (84% repetición alta; tema #1 de la abierta), herramientas (notas 40% / papel 23% / WhatsApp 36%), revisar heladera y armar lista antes de comprar (82%), decidir principalmente sola (56% de la muestra). Su relación con la IA refleja el segmento más activo de la muestra (33% uso activo, 27% probó y dejó).
+
+**Supuesto sintético (agenda de entrevistas):** que el objetivo de salud motiva y sostiene un cambio (creencia 2 → Bloque D), la culpa por el desperdicio (respaldo débil: ~9 menciones), la dinámica de carga con el marido, el color narrativo (18:30, colectivo).

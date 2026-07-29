@@ -1,4 +1,6 @@
-# Graciela Paniagua — Persona terciaria: la abuela a cargo, compradora mensual
+# Graciela Paniagua — ARCHIVADA (ex persona terciaria): la abuela a cargo, compradora mensual
+
+> **Archivada el 2026-07-28, fuera del target.** En la encuesta (n=141, Q11) **cero respondentes** marcaron "con nietos u otros niños a mi cargo": el segmento no apareció en la muestra — en parte por el sesgo del reclutamiento online. Toda esta ficha sigue siendo supuesto sintético sin señal de demanda. Se reactiva solo si otro canal de reclutamiento (o las entrevistas) muestra que el segmento existe y pesa. Su rol de "vara de accesibilidad" (tech baja) queda vacante en el set — tenerlo presente al diseñar. Reemplazada por [Andrés Cabrera](andres-cabrera.md) (pareja sin hijos, 29% de la muestra).
 
 > "Yo me organizo con la libreta y la cabeza, mi hija dice que hay aplicaciones para todo. Será, pero la comida acá sale todos los días igual."
 
