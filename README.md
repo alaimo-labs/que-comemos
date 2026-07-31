@@ -4,6 +4,10 @@ Planificá las cenas de tu casa a partir de una foto de tu heladera. La app corr
 
 ## Cómo instalarla (no hace falta saber programar)
 
+**👉 [Guía de instalación paso a paso](INSTALACION.md)** — pensada para cualquier persona, sin conocimientos técnicos, con solución a los problemas frecuentes.
+
+La versión corta:
+
 1. **Instalá Node.js** (una sola vez). Entrá a [nodejs.org](https://nodejs.org), bajá la versión LTS (el botón verde) e instalala como cualquier programa.
 2. **Descargá esta app**: en esta página de GitHub, botón verde **Code → Download ZIP**. Descomprimí el ZIP donde quieras (por ejemplo, en Documentos).
 3. **Abrila**:
@@ -19,8 +23,8 @@ La app usa un servicio de IA para reconocer los alimentos en tus fotos. Funciona
 1. Conseguí una API Key del proveedor que prefieras:
    - Anthropic: [platform.claude.com](https://platform.claude.com)
    - OpenAI: [platform.openai.com](https://platform.openai.com)
-2. En la app, andá a **Ajustes**, elegí el proveedor, pegá la API Key y guardá.
-3. En **Inicio**, tocá **Probar conexión IA** para confirmar que funciona.
+2. En la app, andá a **Ajustes › IA**, elegí el proveedor, pegá la API Key y guardá.
+3. Abajo de esa misma pestaña, tocá **Probar conexión IA** para confirmar que funciona.
 
 ### ¿Por qué la API Key se guarda en la app y no en un archivo?
 
@@ -33,7 +37,8 @@ Decisión deliberada: la API Key se guarda en la base de datos local de la app (
 ```bash
 corepack enable        # habilita pnpm (viene con Node)
 pnpm install           # instala dependencias y genera el build (postinstall)
-pnpm start             # sirve app + API en http://localhost:3000
+pnpm start             # sirve app + API en http://localhost:4321
+pnpm test              # tests (Vitest) con DB efímera y LLM mockeado
 pnpm dev               # server con --watch + Vite dev server (HMR) en :5173
 ```
 
