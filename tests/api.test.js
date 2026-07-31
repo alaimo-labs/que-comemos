@@ -78,6 +78,8 @@ describe('settings', () => {
     expect(body.familia).toBe('4');
     expect(body.restricciones).toBe('');
     expect(body.gustos).toBe('');
+    expect(body.modo).toBe('con_lo_que_tengo');
+    expect(body.comidas).toEqual(['desayuno', 'almuerzo', 'merienda', 'cena']);
   });
 
   it('PUT persiste el perfil del hogar completo', async () => {
@@ -87,6 +89,8 @@ describe('settings', () => {
       familia: 3,
       restricciones: 'sin maní',
       gustos: 'guisos',
+      modo: 'con_compra_adicional',
+      comidas: ['almuerzo', 'cena'],
     });
     expect(status).toBe(200);
     const { body } = await json('GET', '/api/settings');
@@ -95,13 +99,19 @@ describe('settings', () => {
     expect(body.familia).toBe('3');
     expect(body.restricciones).toBe('sin maní');
     expect(body.gustos).toBe('guisos');
+    expect(body.modo).toBe('con_compra_adicional');
+    expect(body.comidas).toEqual(['almuerzo', 'cena']);
   });
 
-  it('valida horizonte, familia e input_mode', async () => {
+  it('valida horizonte, familia, input_mode, modo y comidas', async () => {
     expect((await json('PUT', '/api/settings', { horizonte_dias: 0 })).status).toBe(400);
     expect((await json('PUT', '/api/settings', { horizonte_dias: 31 })).status).toBe(400);
     expect((await json('PUT', '/api/settings', { familia: 0 })).status).toBe(400);
     expect((await json('PUT', '/api/settings', { input_mode: 'telepatía' })).status).toBe(400);
+    expect((await json('PUT', '/api/settings', { modo: 'a_lo_loco' })).status).toBe(400);
+    expect((await json('PUT', '/api/settings', { comidas: [] })).status).toBe(400);
+    expect((await json('PUT', '/api/settings', { comidas: ['brunch'] })).status).toBe(400);
+    expect((await json('PUT', '/api/settings', { comidas: 'cena' })).status).toBe(400);
   });
 
   it('la API key es write-only: el GET solo expone last4', async () => {
@@ -137,6 +147,41 @@ describe('ciclo de vida del ciclo', () => {
       abandonado_desde: 'triage',
     });
     expect(estados.find((c) => c.id === idCaptura).estado).toBe('propuesta');
+  });
+
+  it('toma modo y comidas del perfil, pisables por body', async () => {
+    await json('PUT', '/api/settings', { modo: 'con_compra_adicional', comidas: ['cena'] });
+    const { body: delPerfil } = await json('POST', '/api/ciclos', {});
+    expect(delPerfil.ciclo.modo).toBe('con_compra_adicional');
+    expect(delPerfil.ciclo.comidas).toEqual(['cena']);
+
+    const { body: pisado } = await json('POST', '/api/ciclos', {
+      modo: 'con_lo_que_tengo',
+      comidas: ['desayuno', 'merienda'],
+    });
+    expect(pisado.ciclo.modo).toBe('con_lo_que_tengo');
+    expect(pisado.ciclo.comidas).toEqual(['desayuno', 'merienda']);
+
+    expect((await json('POST', '/api/ciclos', { modo: 'x' })).status).toBe(400);
+    expect((await json('POST', '/api/ciclos', { comidas: [] })).status).toBe(400);
+  });
+
+  it('PATCH pisa modo y comidas en un gesto', async () => {
+    const { body: creado } = await json('POST', '/api/ciclos', {});
+    expect(creado.ciclo.modo).toBe('con_lo_que_tengo');
+    expect(creado.ciclo.comidas).toEqual(['desayuno', 'almuerzo', 'merienda', 'cena']);
+
+    const { body } = await json('PATCH', `/api/ciclos/${creado.ciclo.id}`, {
+      modo: 'con_compra_adicional',
+      comidas: ['almuerzo', 'cena'],
+    });
+    expect(body.ciclo.modo).toBe('con_compra_adicional');
+    expect(body.ciclo.comidas).toEqual(['almuerzo', 'cena']);
+
+    expect(
+      (await json('PATCH', `/api/ciclos/${creado.ciclo.id}`, { comidas: ['brunch'] })).status
+    ).toBe(400);
+    expect((await json('PATCH', `/api/ciclos/${creado.ciclo.id}`, {})).status).toBe(400);
   });
 
   it('GET /actual devuelve null sin ciclos y el vigente cuando existe', async () => {
@@ -271,6 +316,10 @@ describe('propuesta', () => {
     expect(status).toBe(200);
     expect(body.ciclo.estado).toBe('propuesta');
     expect(body.propuesta.platos[0].nombre).toBe('Arroz con pollo');
+    expect(generarPlan.mock.calls[0][0]).toMatchObject({
+      modo: 'con_lo_que_tengo',
+      comidas: ['desayuno', 'almuerzo', 'merienda', 'cena'],
+    });
     expect(body.metrica.foto_a_propuesta_seg).toBeGreaterThanOrEqual(59);
     expect(body.metrica.foto_a_propuesta_seg).toBeLessThan(120);
 
@@ -320,6 +369,8 @@ describe('métricas', () => {
 
     expect(completado).toMatchObject({ estado: 'propuesta', items_foto: 1, items_sobra: 1 });
     expect(completado.foto_a_propuesta_seg).toBeGreaterThanOrEqual(29);
+    expect(completado.modo).toBe('con_lo_que_tengo');
+    expect(completado.comidas).toEqual(['desayuno', 'almuerzo', 'merienda', 'cena']);
     expect(abandonado).toMatchObject({ estado: 'abandonado', abandonado_desde: 'triage' });
   });
 });

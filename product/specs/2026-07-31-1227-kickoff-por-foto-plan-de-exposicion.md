@@ -36,7 +36,9 @@ Lo que se revela: apertura de ciclo con una o varias fotos sin "tipo de foto"; h
 
 ### Nivel 2 — La lista de compras que completa el plan
 
-Lo que se revela: junto a las cenas, la lista de gaps (exactamente lo que el plan necesita y la foto no encontró); el share de plan + lista a WhatsApp con un toque, como texto plano; el modo «con compra adicional» como opt-in en el perfil, pisable por ciclo.
+Lo que se revela: junto a las comidas, la lista de gaps (exactamente lo que el plan necesita y la foto no encontró); el share de plan + lista a WhatsApp con un toque, como texto plano; el modo «con compra adicional» como opt-in en el perfil, pisable por ciclo.
+
+*Nota de implementación (2026-07-31): la lista de compras existe solo en «con compra adicional» — el modo default usa la modalidad "solo lo que hay" del prompt validado, que la devuelve vacía. Además, el alcance se amplió de "solo cenas" a todas las comidas (desayuno, almuerzo, merienda y cena, configurables en el hogar y pisables por plan) — ver revisión 2026-07-31 de la spec.*
 
 **Belief:** la lista de gaps hace realizable el plan y vive en el canal madre del hogar — se comparte a WhatsApp en lugar de convertirse en una segunda lista que compite con la existente.
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api.js';
+import { COMIDAS, nombreComida } from '../comidas.js';
 
 const PROVIDER_NAMES = { anthropic: 'Anthropic (Claude)', openai: 'OpenAI' };
 
@@ -20,6 +21,8 @@ export function Ajustes() {
   const [familia, setFamilia] = useState('4');
   const [restricciones, setRestricciones] = useState('');
   const [gustos, setGustos] = useState('');
+  const [modo, setModo] = useState('con_lo_que_tengo');
+  const [comidas, setComidas] = useState(COMIDAS);
   const [status, setStatus] = useState(null);
   const [saving, setSaving] = useState(false);
   const [health, setHealth] = useState(null);
@@ -37,6 +40,8 @@ export function Ajustes() {
     setFamilia(s.familia);
     setRestricciones(s.restricciones);
     setGustos(s.gustos);
+    setModo(s.modo);
+    setComidas(s.comidas);
   }
 
   useEffect(() => {
@@ -63,6 +68,8 @@ export function Ajustes() {
         familia,
         restricciones,
         gustos,
+        modo,
+        comidas,
       });
       setNewKey('');
       await load();
@@ -130,6 +137,39 @@ export function Ajustes() {
               onChange={(e) => setFamilia(e.target.value)}
             />
           </label>
+
+          <label className="field">
+            <span>Modo del plan</span>
+            <select value={modo} onChange={(e) => setModo(e.target.value)}>
+              <option value="con_lo_que_tengo">Con lo que tengo</option>
+              <option value="con_compra_adicional">Con compra adicional</option>
+            </select>
+          </label>
+
+          <div className="field">
+            <span>Comidas a planificar</span>
+            <div className="chips">
+              {COMIDAS.map((comida) => {
+                const activa = comidas.includes(comida);
+                return (
+                  <button
+                    key={comida}
+                    type="button"
+                    className={activa ? 'chip-toggle active' : 'chip-toggle'}
+                    onClick={() => {
+                      const siguientes = activa
+                        ? comidas.filter((c) => c !== comida)
+                        : [...comidas, comida];
+                      if (siguientes.length === 0) return;
+                      setComidas(siguientes);
+                    }}
+                  >
+                    {nombreComida(comida)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           <label className="field">
             <span>Restricciones</span>

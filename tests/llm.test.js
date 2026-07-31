@@ -74,6 +74,8 @@ describe('generarPlan', () => {
         { nombre: 'Tupper con comida', cantidad: '1', confianza: 'a_confirmar', origen: 'foto' },
       ],
       horizonteDias: 3,
+      modo: 'con_compra_adicional',
+      comidas: ['almuerzo', 'cena'],
       familia: '4',
       restricciones: '',
       gustos: '',
@@ -88,5 +90,7 @@ describe('generarPlan', () => {
     expect(userMessage.alimentos_disponibles).toContain('Huevos');
     expect(userMessage.alimentos_disponibles).toContain('Arroz');
     expect(userMessage.alimentos_disponibles).not.toContain('Tupper');
+    expect(userMessage.modalidad).toBe('lo que hay + sugerir compra complementaria');
+    expect(userMessage.objective).toContain('almuerzo y cena');
   });
 });

@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { api } from '../api.js';
 import { prepararImagen } from '../imagen.js';
+import { etiquetaDia } from '../dias.js';
+import { COMIDAS, nombreComida } from '../comidas.js';
+import { textoParaWhatsApp, urlWhatsApp } from '../whatsapp.js';
 
 const GRUPOS = [
   { confianza: 'confirmado', titulo: 'Confirmados' },
@@ -65,11 +68,9 @@ export function Ciclo() {
     }
   }
 
-  async function pisarHorizonte(dias) {
+  async function pisarCiclo(cambios) {
     try {
-      const { ciclo: actualizado } = await api.editarCiclo(ciclo.id, {
-        horizonte_dias: dias,
-      });
+      const { ciclo: actualizado } = await api.editarCiclo(ciclo.id, cambios);
       setCiclo(actualizado);
     } catch (e) {
       setError(e.message);
@@ -121,13 +122,13 @@ export function Ciclo() {
             ciclo={ciclo}
             inputMode={inputMode}
             onExtraer={extraer}
-            onHorizonte={pisarHorizonte}
+            onPisar={pisarCiclo}
           />
         ))}
 
       {ciclo?.estado === 'triage' &&
         (ocupado === 'propuesta' ? (
-          <Espera mensaje="Armando tus cenas…" />
+          <Espera mensaje="Armando tu plan…" />
         ) : (
           <Triage
             ciclo={ciclo}
@@ -161,7 +162,7 @@ function Espera({ mensaje }) {
   );
 }
 
-function Captura({ ciclo, inputMode, onExtraer, onHorizonte }) {
+function Captura({ ciclo, inputMode, onExtraer, onPisar }) {
   const [fotos, setFotos] = useState([]);
   const [arrastrando, setArrastrando] = useState(false);
   const primeraFotoTs = useRef(null);
@@ -254,11 +255,11 @@ function Captura({ ciclo, inputMode, onExtraer, onHorizonte }) {
       )}
 
       <div className="stepper">
-        <span>Cenas para</span>
+        <span>Plan para</span>
         <button
           type="button"
           disabled={ciclo.horizonte_dias <= 1}
-          onClick={() => onHorizonte(ciclo.horizonte_dias - 1)}
+          onClick={() => onPisar({ horizonte_dias: ciclo.horizonte_dias - 1 })}
         >
           –
         </button>
@@ -266,10 +267,49 @@ function Captura({ ciclo, inputMode, onExtraer, onHorizonte }) {
         <button
           type="button"
           disabled={ciclo.horizonte_dias >= 30}
-          onClick={() => onHorizonte(ciclo.horizonte_dias + 1)}
+          onClick={() => onPisar({ horizonte_dias: ciclo.horizonte_dias + 1 })}
         >
           +
         </button>
+      </div>
+
+      <div className="chips">
+        <button
+          type="button"
+          className={ciclo.modo === 'con_lo_que_tengo' ? 'chip-toggle active' : 'chip-toggle'}
+          onClick={() => onPisar({ modo: 'con_lo_que_tengo' })}
+        >
+          Con lo que tengo
+        </button>
+        <button
+          type="button"
+          className={ciclo.modo === 'con_compra_adicional' ? 'chip-toggle active' : 'chip-toggle'}
+          onClick={() => onPisar({ modo: 'con_compra_adicional' })}
+        >
+          Con compra adicional
+        </button>
+      </div>
+
+      <div className="chips">
+        {COMIDAS.map((comida) => {
+          const activa = ciclo.comidas.includes(comida);
+          return (
+            <button
+              key={comida}
+              type="button"
+              className={activa ? 'chip-toggle active' : 'chip-toggle'}
+              onClick={() => {
+                const siguientes = activa
+                  ? ciclo.comidas.filter((c) => c !== comida)
+                  : [...ciclo.comidas, comida];
+                if (siguientes.length === 0) return;
+                onPisar({ comidas: siguientes });
+              }}
+            >
+              {nombreComida(comida)}
+            </button>
+          );
+        })}
       </div>
 
       <button
@@ -515,24 +555,22 @@ function Triage({ ciclo, items, setItems, setError, onArmarCenas }) {
       )}
 
       <button className="btn primary" disabled={vacio} onClick={onArmarCenas}>
-        Armar las cenas
+        Armar el plan
       </button>
       </div>
     </>
   );
 }
 
-const DIAS_SEMANA = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
-
-// Día 1 = el día en que se generó la propuesta.
-function etiquetaDia(periodoDia, baseIso) {
-  const n = Number(periodoDia);
-  if (!Number.isInteger(n) || n < 1 || !baseIso) {
-    return String(periodoDia).toUpperCase();
+function agruparPorDia(platos) {
+  const grupos = [];
+  for (const plato of platos) {
+    const dia = String(plato.periodo_dia);
+    const grupo = grupos.find((g) => g.dia === dia);
+    if (grupo) grupo.platos.push(plato);
+    else grupos.push({ dia, platos: [plato] });
   }
-  const fecha = new Date(baseIso);
-  fecha.setDate(fecha.getDate() + n - 1);
-  return DIAS_SEMANA[fecha.getDay()];
+  return grupos;
 }
 
 function Propuesta({ ciclo, propuesta, items, onCicloNuevo }) {
@@ -548,41 +586,62 @@ function Propuesta({ ciclo, propuesta, items, onCicloNuevo }) {
 
   return (
     <>
-      <h2>Tus cenas para {ciclo.horizonte_dias} días</h2>
+      <h2>Tus comidas para {ciclo.horizonte_dias} días</h2>
 
-      {propuesta.platos.map((plato, idx) => (
-        <div className="card plato" key={idx}>
-          <span className="plato-dia">
-            {etiquetaDia(plato.periodo_dia, ciclo.propuesta_at)}
-          </span>
-          <div className="plato-cuerpo">
-            <p className="plato-nombre">{plato.nombre}</p>
-            <p className="plato-sub">Rinde {plato.porciones} · con lo que tenés</p>
-            <div className="plato-pills">
-              <span className="pill">Con lo que hay</span>
-              {usaSobra(plato) && <span className="pill pill-sobra">Aprovecha sobras</span>}
-            </div>
-            <p className="muted">{plato.preparacion_breve}</p>
-            {plato.ingredientes_disponibles.length > 0 && (
-              <ul className="plato-lista muted">
-                {plato.ingredientes_disponibles.map((ing, i) => (
-                  <li key={i}>{ing}</li>
-                ))}
-              </ul>
-            )}
-            {plato.ingredientes_a_comprar.length > 0 && (
-              <>
-                <p className="plato-faltantes">Te falta:</p>
-                <ul className="plato-lista plato-lista-faltantes">
-                  {plato.ingredientes_a_comprar.map((ing, i) => (
+      {agruparPorDia(propuesta.platos).map(({ dia, platos }) => (
+        <div key={dia}>
+          <h3 className="dia-titulo">{etiquetaDia(dia, ciclo.propuesta_at)}</h3>
+          {platos.map((plato, idx) => (
+            <div className="card plato" key={idx}>
+              <p className="plato-nombre">{plato.nombre}</p>
+              <p className="plato-sub">
+                {nombreComida(plato.comida)} · Rinde {plato.porciones}
+              </p>
+              <div className="plato-pills">
+                {plato.ingredientes_a_comprar.length > 0 ? (
+                  <span className="pill pill-warn">Necesita compra</span>
+                ) : (
+                  <span className="pill">Con lo que hay</span>
+                )}
+                {usaSobra(plato) && <span className="pill pill-sobra">Aprovecha sobras</span>}
+              </div>
+              <p className="muted">{plato.preparacion_breve}</p>
+              {plato.ingredientes_disponibles.length > 0 && (
+                <ul className="plato-lista muted">
+                  {plato.ingredientes_disponibles.map((ing, i) => (
                     <li key={i}>{ing}</li>
                   ))}
                 </ul>
-              </>
-            )}
-          </div>
+              )}
+              {plato.ingredientes_a_comprar.length > 0 && (
+                <>
+                  <p className="plato-faltantes">Te falta:</p>
+                  <ul className="plato-lista plato-lista-faltantes">
+                    {plato.ingredientes_a_comprar.map((ing, i) => (
+                      <li key={i}>{ing}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          ))}
         </div>
       ))}
+
+      {propuesta.lista_de_compras?.length > 0 && (
+        <div className="card">
+          <p className="sin-uso-titulo">🛒 Para comprar</p>
+          <ul className="plato-lista">
+            {propuesta.lista_de_compras.map((compra, idx) => (
+              <li key={idx}>
+                {compra.alimento} —{' '}
+                {[compra.cantidad, compra.unidad_o_tamano].filter(Boolean).join(' ')}
+                {compra.motivo ? <span className="muted"> · {compra.motivo}</span> : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {propuesta.supuestos_y_alertas?.length > 0 && (
         <div className="card warn-card">
@@ -606,6 +665,15 @@ function Propuesta({ ciclo, propuesta, items, onCicloNuevo }) {
         </div>
       )}
 
+      <button
+        className="btn primary espaciado"
+        onClick={() =>
+          window.open(urlWhatsApp(textoParaWhatsApp({ propuesta, ciclo })), '_blank')
+        }
+      >
+        Mandar al WhatsApp de la casa
+      </button>
+
       {confirmandoNuevo ? (
         <div className="card">
           <p>Empezar un plan nuevo reemplaza este. ¿Seguimos?</p>
@@ -624,7 +692,7 @@ function Propuesta({ ciclo, propuesta, items, onCicloNuevo }) {
         </div>
       ) : (
         <button
-          className="btn primary espaciado"
+          className="btn secundario espaciado"
           onClick={() => setConfirmandoNuevo(true)}
         >
           Empezar un plan nuevo

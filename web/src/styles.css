@@ -545,25 +545,18 @@ body {
 }
 
 .plato {
-  margin-top: 12px;
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 12px;
+  margin-top: 10px;
   border-radius: calc(var(--radius) * 2);
   box-shadow: var(--shadow-sm);
-  padding: 18px 16px;
+  padding: 16px;
 }
 
-.plato-dia {
+.dia-titulo {
   color: var(--primary);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  padding-top: 5px;
-}
-
-.plato-cuerpo {
-  min-width: 0;
+  margin-top: 18px;
 }
 
 .plato-nombre {
@@ -597,6 +590,38 @@ body {
 .pill-sobra {
   background: var(--secondary);
   color: var(--secondary-foreground);
+}
+
+.pill-warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.chip-toggle {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chip-toggle.active {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--primary);
+  font-weight: 600;
 }
 
 .plato-lista {

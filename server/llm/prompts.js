@@ -109,12 +109,25 @@ export function itemsPlanificables(items) {
   return items.filter((i) => i.confianza !== 'a_confirmar');
 }
 
+// Modos de la app → modalidades textuales del prompt de planificación.
+export const MODALIDAD_POR_MODO = {
+  con_lo_que_tengo: 'solo lo que hay',
+  con_compra_adicional: 'lo que hay + sugerir compra complementaria',
+};
+
+// "desayuno, almuerzo, merienda y cena" / "merienda y cena" / "cena"
+function enumerarComidas(comidas) {
+  if (comidas.length === 1) return comidas[0];
+  return `${comidas.slice(0, -1).join(', ')} y ${comidas.at(-1)}`;
+}
+
 // El prompt de planificación espera un user message con
 // { profile, objective, modalidad, alimentos_disponibles }.
-// Nivel 1: modalidad fija "solo lo que hay"; solo cenas; sobras primero.
 export function planificacionUserMessage({
   items,
   horizonteDias,
+  modo,
+  comidas,
   familia,
   restricciones,
   gustos,
@@ -135,8 +148,8 @@ export function planificacionUserMessage({
   return JSON.stringify(
     {
       profile,
-      objective: `Planificar únicamente las cenas de los próximos ${horizonteDias} días: una cena por día, con periodo_dia numerado de "1" a "${horizonteDias}". No incluyas desayunos, almuerzos ni otras comidas. Prioriza las sobras ya cocinadas antes de cocinar de cero. Si lo disponible no alcanza para todo el período, propone menos cenas y decláralo en supuestos_y_alertas.`,
-      modalidad: 'solo lo que hay',
+      objective: `Planificar las siguientes comidas de cada uno de los próximos ${horizonteDias} días: ${enumerarComidas(comidas)} — una de cada una por día, con periodo_dia numerado de "1" a "${horizonteDias}". No incluyas ninguna otra comida. Prioriza las sobras ya cocinadas antes de cocinar de cero. Si lo disponible no alcanza para todo el período, propone menos comidas y decláralo en supuestos_y_alertas.`,
+      modalidad: MODALIDAD_POR_MODO[modo],
       alimentos_disponibles: items.map(linea).join('\n'),
     },
     null,
