@@ -4,7 +4,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.resolve(here, '../../data');
+// QUECOMEMOS_DATA_DIR permite aislar la DB (tests usan un directorio efímero).
+const dataDir = process.env.QUECOMEMOS_DATA_DIR
+  ? path.resolve(process.env.QUECOMEMOS_DATA_DIR)
+  : path.resolve(here, '../../data');
 const migrationsDir = path.join(here, 'migrations');
 
 fs.mkdirSync(dataDir, { recursive: true });

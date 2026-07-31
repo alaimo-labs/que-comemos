@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Habilitar pnpm (corepack)
+        run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          # El mínimo soportado por "engines" — si pasa acá, pasa en cualquier
+          # máquina de los hogares del piloto.
+          node-version: 20
+          cache: pnpm
+
+      # El postinstall compila el frontend con Vite: si el build rompe, CI
+      # falla acá — actúa de smoke test de la UI.
+      - name: Instalar dependencias (incluye build del frontend)
+        run: pnpm install --frozen-lockfile
+
+      - name: Tests
+        run: pnpm test

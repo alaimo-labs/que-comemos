@@ -12,7 +12,8 @@
     "postinstall": "vite build",
     "start": "node server/index.js",
     "dev": "NO_OPEN=1 node --watch server/index.js & vite",
-    "build": "vite build"
+    "build": "vite build",
+    "test": "vitest run"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^2.0.0",
@@ -28,7 +29,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.0",
-    "vite": "^7.0.0"
+    "vite": "^7.0.0",
+    "vitest": "^4.1.10"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
