@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { db, getSetting } from '../db/index.js';
 import { extraerItems, generarPlan } from '../llm/index.js';
 import { itemsPlanificables } from '../llm/prompts.js';
-import { HOGAR_DEFAULTS } from './settings.js';
+import { HOGAR_DEFAULTS, MODOS, normalizarComidas } from './settings.js';
 
 export const ciclosRouter = Router();
 export const metricasRouter = Router();
@@ -26,7 +26,7 @@ function itemsDelCiclo(cicloId) {
 
 function publicarCiclo(ciclo) {
   const { propuesta_json, ...resto } = ciclo;
-  return resto;
+  return { ...resto, comidas: JSON.parse(ciclo.comidas) };
 }
 
 function errorIA(res, err) {
@@ -47,6 +47,16 @@ ciclosRouter.post('/', (req, res) => {
     return res.status(400).json({ error: 'El horizonte tiene que ser entre 1 y 30 días' });
   }
 
+  const modo = req.body?.modo ?? hogar('modo');
+  if (!MODOS.includes(modo)) {
+    return res.status(400).json({ error: 'Modo de plan inválido' });
+  }
+
+  const comidas = normalizarComidas(req.body?.comidas ?? JSON.parse(hogar('comidas')));
+  if (!comidas) {
+    return res.status(400).json({ error: 'Elegí al menos una comida válida' });
+  }
+
   db.prepare(
     `UPDATE ciclos
      SET abandonado_desde = estado,
@@ -56,8 +66,8 @@ ciclosRouter.post('/', (req, res) => {
   ).run();
 
   const { lastInsertRowid } = db
-    .prepare('INSERT INTO ciclos (horizonte_dias) VALUES (?)')
-    .run(horizonte);
+    .prepare('INSERT INTO ciclos (horizonte_dias, modo, comidas) VALUES (?, ?, ?)')
+    .run(horizonte, modo, JSON.stringify(comidas));
 
   res.json({ ciclo: publicarCiclo(buscarCiclo(lastInsertRowid)) });
 });
@@ -124,7 +134,7 @@ ciclosRouter.post('/:id/extraccion', async (req, res) => {
   });
 });
 
-// Pisar el horizonte del ciclo en un gesto.
+// Pisar horizonte, modo o comidas del ciclo en un gesto.
 ciclosRouter.patch('/:id', (req, res) => {
   const ciclo = buscarCiclo(req.params.id);
   if (!ciclo) return res.status(404).json({ error: 'Ese plan no existe' });
@@ -132,12 +142,38 @@ ciclosRouter.patch('/:id', (req, res) => {
     return res.status(409).json({ error: 'Este plan ya no se puede modificar' });
   }
 
-  const horizonte = Number(req.body?.horizonte_dias);
-  if (!Number.isInteger(horizonte) || horizonte < 1 || horizonte > 30) {
-    return res.status(400).json({ error: 'El horizonte tiene que ser entre 1 y 30 días' });
+  const { horizonte_dias, modo, comidas } = req.body || {};
+  const cambios = {};
+
+  if (horizonte_dias !== undefined) {
+    const horizonte = Number(horizonte_dias);
+    if (!Number.isInteger(horizonte) || horizonte < 1 || horizonte > 30) {
+      return res.status(400).json({ error: 'El horizonte tiene que ser entre 1 y 30 días' });
+    }
+    cambios.horizonte_dias = horizonte;
   }
 
-  db.prepare('UPDATE ciclos SET horizonte_dias = ? WHERE id = ?').run(horizonte, ciclo.id);
+  if (modo !== undefined) {
+    if (!MODOS.includes(modo)) {
+      return res.status(400).json({ error: 'Modo de plan inválido' });
+    }
+    cambios.modo = modo;
+  }
+
+  if (comidas !== undefined) {
+    const normalizadas = normalizarComidas(comidas);
+    if (!normalizadas) {
+      return res.status(400).json({ error: 'Elegí al menos una comida válida' });
+    }
+    cambios.comidas = JSON.stringify(normalizadas);
+  }
+
+  if (Object.keys(cambios).length === 0) {
+    return res.status(400).json({ error: 'No hay nada para cambiar' });
+  }
+
+  const set = Object.keys(cambios).map((c) => `${c} = ?`).join(', ');
+  db.prepare(`UPDATE ciclos SET ${set} WHERE id = ?`).run(...Object.values(cambios), ciclo.id);
   res.json({ ciclo: publicarCiclo(buscarCiclo(ciclo.id)) });
 });
 
@@ -260,6 +296,8 @@ ciclosRouter.post('/:id/propuesta', async (req, res) => {
     propuesta = await generarPlan({
       items,
       horizonteDias: ciclo.horizonte_dias,
+      modo: ciclo.modo,
+      comidas: JSON.parse(ciclo.comidas),
       familia: hogar('familia'),
       restricciones: hogar('restricciones'),
       gustos: hogar('gustos'),
@@ -306,6 +344,8 @@ metricasRouter.get('/ciclos', (req, res) => {
         id: c.id,
         estado: c.estado,
         horizonte_dias: c.horizonte_dias,
+        modo: c.modo,
+        comidas: JSON.parse(c.comidas),
         fotos_count: c.fotos_count,
         creado_at: c.creado_at,
         primera_foto_at: c.primera_foto_at,

@@ -148,6 +148,13 @@ Rankeados por letalidad (del archivo de idea):
 7. **La lista de gaps convive con la lista madre del hogar:** asumimos que complementa (y no compite con) la nota/WhatsApp donde el hogar ya anota lo que se acaba — si el hogar termina manteniendo dos listas, reaparece el patrón que mató a Bring ("yo escribía en la app, él en el WhatsApp; dos listas y ninguna servía", E01). Mitigación post-crítica: el share a WhatsApp con un toque (historia 6) lleva la lista al canal madre en vez de competirle.
 8. **El modo «con compra adicional» tiene demanda real:** nadie del corpus lo pidió; solo lo insinúa el borde de hijos adultos que piden novedad (E03). Riesgo bajo por ser opt-in.
 
+## Revisión 2026-07-31 — decisiones de implementación del Nivel 2
+
+Dos desviaciones decididas por Martín al implementar el Nivel 2 (branch `nivel-2-lista-de-compras`):
+
+1. **La lista de compras solo existe en «con compra adicional».** El modo default «con lo que tengo» usa la modalidad "solo lo que hay" del prompt de planificación validado, que devuelve la lista vacía por definición — los faltantes por plato igual se marcan. Desvía el criterio de la historia 6 ("en el modo por defecto la lista completa el horizonte o destraba platos casi-cocinables"): se prefirió fidelidad al prompt validado con evals por sobre la letra del criterio.
+2. **El plan cubre todas las comidas, no solo la cena.** Desayuno, almuerzo, merienda y cena, las cuatro activadas por default en el perfil del hogar, desactivables en Ajustes y pisables por plan (mismo patrón que horizonte y modo). Reemplaza el alcance "la cena como cuña del MVP" (historia 4 y revisión 2026-07-30); la asimetría de costo de inferencia se aceptó.
+
 ## Revisión 2026-07-30 — panel de crítica (Valeria, 4/5)
 
 Fuente: `product/insights/2026-07-30-1249-critique-kickoff-por-foto.md`. Cambios aplicados:

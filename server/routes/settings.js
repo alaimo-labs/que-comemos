@@ -7,13 +7,26 @@ export const settingsRouter = Router();
 const PROVIDERS = ['anthropic', 'openai'];
 const INPUT_MODES = ['archivos', 'camara'];
 
+export const MODOS = ['con_lo_que_tengo', 'con_compra_adicional'];
+export const COMIDAS = ['desayuno', 'almuerzo', 'merienda', 'cena'];
+
 export const HOGAR_DEFAULTS = {
   input_mode: 'archivos',
   horizonte_dias: '7',
   familia: '4',
   restricciones: '',
   gustos: '',
+  modo: 'con_lo_que_tengo',
+  comidas: JSON.stringify(COMIDAS),
 };
+
+// Valida un array de comidas; devuelve el array normalizado (en el orden
+// canónico) o null si es inválido.
+export function normalizarComidas(comidas) {
+  if (!Array.isArray(comidas) || comidas.length === 0) return null;
+  if (comidas.some((c) => !COMIDAS.includes(c))) return null;
+  return COMIDAS.filter((c) => comidas.includes(c));
+}
 
 function keyStatus(provider) {
   const key = getSetting(`api_key_${provider}`);
@@ -38,6 +51,8 @@ settingsRouter.get('/', (req, res) => {
     familia: getSetting('familia') || HOGAR_DEFAULTS.familia,
     restricciones: getSetting('restricciones') ?? HOGAR_DEFAULTS.restricciones,
     gustos: getSetting('gustos') ?? HOGAR_DEFAULTS.gustos,
+    modo: getSetting('modo') || HOGAR_DEFAULTS.modo,
+    comidas: JSON.parse(getSetting('comidas') || HOGAR_DEFAULTS.comidas),
   });
 });
 
@@ -60,7 +75,8 @@ settingsRouter.put('/', (req, res) => {
     }
   }
 
-  const { input_mode, horizonte_dias, familia, restricciones, gustos } = req.body || {};
+  const { input_mode, horizonte_dias, familia, restricciones, gustos, modo, comidas } =
+    req.body || {};
 
   if (input_mode !== undefined) {
     if (!INPUT_MODES.includes(input_mode)) {
@@ -83,6 +99,21 @@ settingsRouter.put('/', (req, res) => {
       return res.status(400).json({ error: 'La familia tiene que ser entre 1 y 20 personas' });
     }
     setSetting('familia', String(personas));
+  }
+
+  if (modo !== undefined) {
+    if (!MODOS.includes(modo)) {
+      return res.status(400).json({ error: 'Modo de plan inválido' });
+    }
+    setSetting('modo', modo);
+  }
+
+  if (comidas !== undefined) {
+    const normalizadas = normalizarComidas(comidas);
+    if (!normalizadas) {
+      return res.status(400).json({ error: 'Elegí al menos una comida válida' });
+    }
+    setSetting('comidas', JSON.stringify(normalizadas));
   }
 
   if (typeof restricciones === 'string') setSetting('restricciones', restricciones.trim());

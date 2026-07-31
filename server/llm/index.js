@@ -130,7 +130,15 @@ export async function extraerItems({ imagenes }) {
   return object.items.map(itemDesdeExtraccion);
 }
 
-export async function generarPlan({ items, horizonteDias, familia, restricciones, gustos }) {
+export async function generarPlan({
+  items,
+  horizonteDias,
+  modo,
+  comidas,
+  familia,
+  restricciones,
+  gustos,
+}) {
   const active = requireActiveModel();
   const planificables = itemsPlanificables(items);
   const { object } = await generateObject({
@@ -143,6 +151,8 @@ export async function generarPlan({ items, horizonteDias, familia, restricciones
         content: planificacionUserMessage({
           items: planificables,
           horizonteDias,
+          modo,
+          comidas,
           familia,
           restricciones,
           gustos,

@@ -41,6 +41,8 @@ describe('planificacionUserMessage', () => {
       { nombre: 'Guiso', cantidad: '2 porciones', confianza: 'confirmado', origen: 'sobra' },
     ],
     horizonteDias: 5,
+    modo: 'con_lo_que_tengo',
+    comidas: ['desayuno', 'almuerzo', 'merienda', 'cena'],
     familia: '4',
     restricciones: 'sin maní',
     gustos: 'guisos',
@@ -50,6 +52,25 @@ describe('planificacionUserMessage', () => {
     const msg = JSON.parse(planificacionUserMessage(base));
     expect(Object.keys(msg)).toEqual(['profile', 'objective', 'modalidad', 'alimentos_disponibles']);
     expect(msg.modalidad).toBe('solo lo que hay');
+  });
+
+  it('mapea el modo a la modalidad del prompt', () => {
+    const conCompra = JSON.parse(
+      planificacionUserMessage({ ...base, modo: 'con_compra_adicional' })
+    );
+    expect(conCompra.modalidad).toBe('lo que hay + sugerir compra complementaria');
+  });
+
+  it('el objective enumera exactamente las comidas del ciclo', () => {
+    const todas = JSON.parse(planificacionUserMessage(base));
+    expect(todas.objective).toContain('desayuno, almuerzo, merienda y cena');
+
+    const parcial = JSON.parse(
+      planificacionUserMessage({ ...base, comidas: ['merienda', 'cena'] })
+    );
+    expect(parcial.objective).toContain('merienda y cena');
+    expect(parcial.objective).not.toContain('desayuno');
+    expect(parcial.objective).toContain('No incluyas ninguna otra comida');
   });
 
   it('interpola horizonte, familia, restricciones y gustos', () => {
