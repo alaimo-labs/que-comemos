@@ -5,3 +5,8 @@
 .claude
 
 .DS_Store
+
+# App
+node_modules/
+dist/
+data/

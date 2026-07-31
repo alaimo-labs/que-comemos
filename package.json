@@ -1,0 +1,39 @@
+{
+  "name": "que-comemos",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Planificá las cenas de tu casa a partir de una foto de tu heladera. App local: tus datos y tu clave nunca salen de tu computadora.",
+  "packageManager": "pnpm@10.18.1",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "postinstall": "vite build",
+    "start": "node server/index.js",
+    "dev": "NO_OPEN=1 node --watch server/index.js & vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.0",
+    "@ai-sdk/openai": "^2.0.0",
+    "@fontsource/geist-sans": "^5.3.0",
+    "ai": "^5.0.0",
+    "better-sqlite3": "^12.0.0",
+    "express": "^5.1.0",
+    "open": "^10.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "vite": "^7.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
+  }
+}
