@@ -3,6 +3,7 @@
 - **Origen:** idea clarificada `product/ideas/2026-07-29-1313-kickoff-por-foto.md` (sesión `/clarify-idea` 2026-07-29); ampliado con la lista de compras en la propuesta (sesión `/clarify-idea` 2026-07-30)
 - **Journey:** redefine el paso 2 del to-be (`product/journeys/2026-07-28-1236-journey-to-be-ciclo-quecomemos.md`), encadena directo al paso 3 y adelanta una versión mínima del paso 5 (lista de gaps)
 - **Estado:** revisado tras panel de crítica (Valeria 4/5, `product/insights/2026-07-30-1249-critique-kickoff-por-foto.md`)
+- **Plan de exposición:** `product/specs/2026-07-31-1227-kickoff-por-foto-plan-de-exposicion.md` (2 niveles, sesión `/slice-this-feature` 2026-07-31)
 
 ## Problema
 
@@ -138,7 +139,7 @@ Nos equivocamos si:
 
 Rankeados por letalidad (del archivo de idea):
 
-1. **Precisión del LLM sobre fotos reales** (ítems + cantidades + filtro de alimentos): si "a revisar" y "a confirmar" se llenan, el triage se convierte en "la hora escaneando códigos" que mató a la app de E04. Testeable sin construir: prototipo con 20–30 fotos reales midiendo distribución de confianza y tasa de error.
+1. **Precisión del LLM sobre fotos reales** (ítems + cantidades + filtro de alimentos): si "a revisar" y "a confirmar" se llenan, el triage se convierte en "la hora escaneando códigos" que mató a la app de E04. Testeable sin construir: prototipo con 20–30 fotos reales midiendo distribución de confianza y tasa de error. **[VALIDADA 2026-07-31 con evals — el prompt existe y se reutiliza en el Nivel 1 del plan de exposición.]**
 2. **Que el triage se complete y sea corto:** el kickoff muere si el repaso se alarga o abandona. Cubierto por la métrica foto→propuesta (historia 3).
 3. **Que las sobras se agreguen a mano:** la foto no ve adentro de un envase; la mitigación es el gesto manual en el triage (revisión post-crítica). Queda asumido que Valeria efectivamente lo usa — si no lo usa, el punto ciego #1 del corpus (5/7 hogares) sigue abierto y la propuesta hace re-cocinar lo ya cocinado.
 4. **Pudor y logística de la foto:** heladera desordenada, mala luz, apuro. Solo E04 lo hace hoy de forma sostenida; el resto del corpus nunca lo hizo.

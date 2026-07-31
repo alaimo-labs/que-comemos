@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Inicio } from './screens/Inicio.jsx';
+import { Ciclo } from './screens/Ciclo.jsx';
 import { Ajustes } from './screens/Ajustes.jsx';
 
 export function App() {
-  const [screen, setScreen] = useState('inicio');
+  const [screen, setScreen] = useState('ciclo');
 
   return (
     <div className="app">
@@ -13,19 +13,16 @@ export function App() {
       </header>
 
       <main className="main">
-        {screen === 'inicio' ? (
-          <Inicio onIngresarKey={() => setScreen('ajustes')} />
-        ) : (
-          <Ajustes />
-        )}
+        {screen === 'ciclo' && <Ciclo />}
+        {screen === 'ajustes' && <Ajustes />}
       </main>
 
       <nav className="nav">
         <button
-          className={screen === 'inicio' ? 'nav-btn active' : 'nav-btn'}
-          onClick={() => setScreen('inicio')}
+          className={screen === 'ciclo' ? 'nav-btn active' : 'nav-btn'}
+          onClick={() => setScreen('ciclo')}
         >
-          Inicio
+          Plan
         </button>
         <button
           className={screen === 'ajustes' ? 'nav-btn active' : 'nav-btn'}

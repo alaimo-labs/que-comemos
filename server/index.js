@@ -7,6 +7,7 @@ import './db/index.js';
 import { healthRouter } from './routes/health.js';
 import { settingsRouter } from './routes/settings.js';
 import { visionRouter } from './routes/vision.js';
+import { ciclosRouter, metricasRouter } from './routes/ciclos.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.resolve(here, '../dist');
@@ -17,6 +18,8 @@ app.use(express.json({ limit: '25mb' }));
 app.use('/api/health', healthRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/vision', visionRouter);
+app.use('/api/ciclos', ciclosRouter);
+app.use('/api/metricas', metricasRouter);
 
 if (fs.existsSync(distDir)) {
   app.use(express.static(distDir));

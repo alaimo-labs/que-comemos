@@ -5,6 +5,15 @@ import { DEFAULT_MODELS } from '../llm/index.js';
 export const settingsRouter = Router();
 
 const PROVIDERS = ['anthropic', 'openai'];
+const INPUT_MODES = ['archivos', 'camara'];
+
+export const HOGAR_DEFAULTS = {
+  input_mode: 'archivos',
+  horizonte_dias: '7',
+  familia: '4',
+  restricciones: '',
+  gustos: '',
+};
 
 function keyStatus(provider) {
   const key = getSetting(`api_key_${provider}`);
@@ -24,6 +33,11 @@ settingsRouter.get('/', (req, res) => {
       anthropic: keyStatus('anthropic'),
       openai: keyStatus('openai'),
     },
+    input_mode: getSetting('input_mode') || HOGAR_DEFAULTS.input_mode,
+    horizonte_dias: getSetting('horizonte_dias') || HOGAR_DEFAULTS.horizonte_dias,
+    familia: getSetting('familia') || HOGAR_DEFAULTS.familia,
+    restricciones: getSetting('restricciones') ?? HOGAR_DEFAULTS.restricciones,
+    gustos: getSetting('gustos') ?? HOGAR_DEFAULTS.gustos,
   });
 });
 
@@ -45,6 +59,34 @@ settingsRouter.put('/', (req, res) => {
       setSetting(`api_key_${p}`, keys[p].trim());
     }
   }
+
+  const { input_mode, horizonte_dias, familia, restricciones, gustos } = req.body || {};
+
+  if (input_mode !== undefined) {
+    if (!INPUT_MODES.includes(input_mode)) {
+      return res.status(400).json({ error: 'Modo de captura inválido' });
+    }
+    setSetting('input_mode', input_mode);
+  }
+
+  if (horizonte_dias !== undefined) {
+    const dias = Number(horizonte_dias);
+    if (!Number.isInteger(dias) || dias < 1 || dias > 30) {
+      return res.status(400).json({ error: 'El horizonte tiene que ser entre 1 y 30 días' });
+    }
+    setSetting('horizonte_dias', String(dias));
+  }
+
+  if (familia !== undefined) {
+    const personas = Number(familia);
+    if (!Number.isInteger(personas) || personas < 1 || personas > 20) {
+      return res.status(400).json({ error: 'La familia tiene que ser entre 1 y 20 personas' });
+    }
+    setSetting('familia', String(personas));
+  }
+
+  if (typeof restricciones === 'string') setSetting('restricciones', restricciones.trim());
+  if (typeof gustos === 'string') setSetting('gustos', gustos.trim());
 
   res.json({ ok: true });
 });
